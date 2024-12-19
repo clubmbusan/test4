@@ -147,7 +147,64 @@ closeGiftModal.addEventListener('click', () => {
         }
     });
 });
- 
+
+// === [4] 상속 모달 관련 코드 ===
+const inheritanceButton = document.getElementById('inheritanceButton'); // 상속취득 버튼
+const inheritanceModal = document.getElementById('inheritanceModal');   // 상속취득 모달
+const confirmInheritanceType = document.getElementById('confirmInheritanceType'); // 확인 버튼
+const closeInheritanceModal = document.getElementById('closeInheritanceModal');   // 닫기 버튼
+
+// 상속취득 버튼 클릭 시 모달 표시
+inheritanceButton.addEventListener('click', () => {
+    inheritanceModal.style.display = 'flex';
+});
+
+// 상속취득 모달 확인 버튼 클릭 이벤트
+confirmInheritanceType.addEventListener('click', () => {
+    const inheritanceType = document.getElementById('inheritanceType').value; // 상속 종류
+    const isAdjustedArea = document.getElementById('isAdjustedAreaInheritance').value === 'yes'; // 조정 대상 여부
+    const assetValue = parseInt(document.getElementById('realEstateValue').value.replace(/,/g, '') || '0', 10);
+
+    if (isNaN(assetValue) || assetValue <= 0) {
+        alert('유효한 금액을 입력하세요.');
+        return;
+    }
+
+    let taxRate = 0;
+
+    // 상속 종류에 따른 세율 설정
+    if (inheritanceType === 'general') {
+        taxRate = isAdjustedArea ? 0.028 : 0.03; // 일반 상속: 조정 대상 여부에 따라 세율 변경
+    } else if (inheritanceType === 'corporate') {
+        taxRate = 0.04; // 법인 상속
+    }
+
+    const acquisitionTax = Math.floor(assetValue * taxRate); // 취득세 계산
+
+    // 결과 출력
+    updateResult('상속 취득 계산 결과', `
+        <p>상속 종류: ${inheritanceType}</p>
+        <p>조정 대상 지역: ${isAdjustedArea ? '예' : '아니오'}</p>
+        <p>상속 금액: ${assetValue.toLocaleString()} 원</p>
+        <p>취득세: ${acquisitionTax.toLocaleString()} 원</p>
+        <p>세율: ${(taxRate * 100).toFixed(1)}%</p>
+    `);
+
+    inheritanceModal.style.display = 'none';
+});
+
+// 닫기 버튼 클릭 이벤트
+closeInheritanceModal.addEventListener('click', () => {
+    inheritanceModal.style.display = 'none';
+});
+
+// 모달 외부 클릭 시 닫기
+window.addEventListener('click', (e) => {
+    if (e.target === inheritanceModal) {
+        inheritanceModal.style.display = 'none';
+    }
+});
+
     // 계산 버튼 클릭 이벤트
     document.getElementById('calculateButton').addEventListener('click', () => {
         let assetValue = 0; // 자산 금액 초기화
