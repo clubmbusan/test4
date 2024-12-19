@@ -130,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
         otherOptions.style.display = 'none';
     }
 });
+
     
     // 증여 모달 관련 코드
 const giftButton = document.getElementById('giftButton'); // 증여취득 버튼
