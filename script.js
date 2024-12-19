@@ -10,11 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 재산 유형 변경 이벤트: 선택된 유형에 따라 필드를 동적으로 표시
     assetType.addEventListener('change', () => {
-        Object.values(fields).forEach(field => {
-            if (field) {
-                field.style.display = 'none';
-            }
-        });
+        Object.values(fields).forEach(field => field.style.display = 'none');
         const selectedField = fields[assetType.value];
         if (selectedField) selectedField.style.display = 'block';
     });
