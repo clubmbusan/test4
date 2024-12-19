@@ -115,14 +115,14 @@
         </select>
 
         <!-- 확인 및 닫힘 버튼 -->
-        <div style="display: flex; justify-content: space-between; margin-top: 10px;">
-            <button type="button" id="confirmGiftType">확인</button>
-            <button type="button" id="closeGiftModal">닫기</button>
-        </div>
+        <div class="button-group">
+    <button type="button" class="confirm-btn" id="confirmGiftType">확인</button>
+    <button type="button" class="close-btn" id="closeGiftModal">닫기</button>
+</div>
     </div>
 </div>
-
-            <!-- 상속취득 모달 -->
+ 
+                  <!-- 상속취득 모달 -->
 <div id="inheritanceModal" class="modal" style="display: none;">
     <div class="modal-content">
         <h3>상속 취득 세부사항</h3>
@@ -147,6 +147,7 @@
         <button type="button" class="close-btn" id="closeInheritanceModal">닫기</button>
     </div>
 </div>
+           
             <!-- 계산하기 버튼 -->
             <button type="button" id="calculateButton" style="margin-top: 15px;">계산하기</button>
         </form>
