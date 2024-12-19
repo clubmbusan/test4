@@ -234,6 +234,34 @@ window.addEventListener('click', (e) => {
     }
 });
 
+ // 원시취득 모달 관련 코드
+const originalButton = document.getElementById('originalButton');   // 원시취득 버튼
+const originalModal = document.getElementById('originalModal');     // 원시취득 모달
+const originalCategory = document.getElementById('originalCategory'); // 건축물 대분류
+
+originalButton.addEventListener('click', () => {
+    const selectedType = realEstateType.value;
+
+    // 원시취득은 건축물만 가능
+    if (selectedType !== 'building') {
+        alert('원시취득은 건축물에만 해당됩니다.');
+        return;
+    }
+
+    // 건축물 관련 옵션 추가
+    originalCategory.innerHTML = `
+        <option value="residential">주거용</option>
+        <option value="nonResidential">비주거용</option>
+    `;
+
+    originalModal.style.display = 'flex'; // 모달 표시
+});
+
+// 닫기 버튼 클릭 이벤트
+document.getElementById('closeOriginalModal').addEventListener('click', () => {
+    originalModal.style.display = 'none';
+});
+
     // 계산 버튼 클릭 이벤트
     document.getElementById('calculateButton').addEventListener('click', () => {
         let assetValue = 0; // 자산 금액 초기화
