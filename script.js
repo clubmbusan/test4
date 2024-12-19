@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 재산 유형 변경 이벤트: 선택된 유형에 따라 필드를 동적으로 표시
     assetType.addEventListener('change', () => {
         Object.values(fields).forEach(field => {
-            if (field) { // 요소가 null인지 확인
+            if (field) {
                 field.style.display = 'none';
             }
         });
@@ -36,23 +36,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 모달 내 필드 초기화 함수
     function resetModalFields() {
-        const fields = [
-            document.getElementById('houseOptions'),
-            document.getElementById('landOptions'),
-            document.getElementById('buildingOptions'),
-            document.getElementById('vehicleOptions'),
-            document.getElementById('compactVehicleNotice'),
-            document.getElementById('usedVehicleNotice'),
-            document.getElementById('otherOptions'),
-        ];
-
-        fields.forEach(field => {
-            if (field) { // 요소가 존재하는 경우에만 처리
-                field.style.display = 'none';
-            } else {
-                console.warn('Field is missing:', field); // 누락된 필드를 디버깅용으로 로그 출력
-            }
-        });
+        document.getElementById('houseOptions').style.display = 'none';
+        document.getElementById('landOptions').style.display = 'none';
+        document.getElementById('buildingOptions').style.display = 'none';
+        document.getElementById('vehicleOptions').style.display = 'none';
+        document.getElementById('compactVehicleNotice').style.display = 'none';
+        document.getElementById('usedVehicleNotice').style.display = 'none';
+        document.getElementById('otherOptions').style.display = 'none';
     }
 
     // 확인 버튼 클릭 이벤트
@@ -70,30 +60,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 세율 계산 로직
         if (assetType === 'realEstate') {
-            if (realEstateType === 'residential1') {
-                taxRate = saleAmount <= 100000000 ? 0.01 : saleAmount <= 600000000 ? 0.015 : 0.03;
-            } else if (realEstateType === 'residentialMulti') {
-                taxRate = 0.08;
-            } else if (realEstateType === 'commercial') {
-                taxRate = 0.04;
+            if (realEstateType === 'house') {
+                const isAdjustedArea = document.getElementById('isAdjustedArea').value === 'yes';
+                taxRate = isAdjustedArea ? 0.015 : 0.01;
+            } else if (realEstateType === 'land') {
+                const isAgriculturalLand = document.getElementById('isAgriculturalLand').value === 'yes';
+                taxRate = isAgriculturalLand ? 0.023 : 0.028;
+            } else if (realEstateType === 'building') {
+                const buildingUse = document.getElementById('buildingUse').value; // 주거용/비주거용
+                taxRate = buildingUse === 'residential' ? 0.028 : 0.03;
             }
         } else if (assetType === 'vehicle') {
             if (vehicleType === 'standard') {
                 const isBusinessVehicle = document.getElementById('isBusinessVehicle').value === 'yes';
                 taxRate = isBusinessVehicle ? 0.07 : 0.05;
             } else if (vehicleType === 'compact') {
-                taxRate = 0.05;
+                taxRate = 0.05; // 경차는 고정 세율
             } else if (vehicleType === 'used') {
-                taxRate = 0.03;
+                taxRate = 0.03; // 중고차는 고정 세율
             }
         } else if (assetType === 'other') {
-            taxRate = 0.03;
+            taxRate = 0.03; // 기타 자산 고정 세율
         }
 
         const acquisitionTax = Math.floor(saleAmount * taxRate);
-        const ruralTax = assetType === 'vehicle' && vehicleType === 'standard' && document.getElementById('isBusinessVehicle').value === 'yes'
-            ? Math.floor(saleAmount * 0.02)
-            : 0;
+        let ruralTax = 0;
+
+        // 농어촌특별세 추가 계산 (사업용 차량)
+        if (assetType === 'vehicle' && vehicleType === 'standard' && document.getElementById('isBusinessVehicle').value === 'yes') {
+            ruralTax = Math.floor(saleAmount * 0.02); // 2%
+        }
 
         // 결과 출력
         updateResult('매매 취득 계산 결과', `
@@ -125,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const resultDiv = document.getElementById('result');
         resultDiv.innerHTML = `<h3>${title}</h3>${details}`;
     }
-});
+}); // DOMContentLoaded 닫는 중괄호
     
     // 증여 모달 관련 코드
 const giftButton = document.getElementById('giftButton'); // 증여취득 버튼
