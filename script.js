@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 공통 결과 업데이트 함수
+    // === [4] 공통 함수: 결과 업데이트 ===
     function updateResult(title, details) {
         const resultDiv = document.getElementById('result');
         resultDiv.innerHTML = `<h3>${title}</h3>${details}`;
@@ -130,7 +130,6 @@ document.addEventListener('DOMContentLoaded', () => {
         otherOptions.style.display = 'none';
     }
 });
-
     
     // 증여 모달 관련 코드
 const giftButton = document.getElementById('giftButton'); // 증여취득 버튼
