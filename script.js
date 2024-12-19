@@ -30,23 +30,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 매매취득 버튼 클릭 시 모달 표시
     saleButton.addEventListener('click', () => {
+        console.log('매매취득 버튼 클릭됨'); // 디버깅 로그 추가
         resetModalFields(); // 모달 열기 전에 모든 필드를 초기화
         saleModal.style.display = 'flex';
     });
 
     // 모달 내 필드 초기화 함수
     function resetModalFields() {
-        document.getElementById('houseOptions').style.display = 'none';
-        document.getElementById('landOptions').style.display = 'none';
-        document.getElementById('buildingOptions').style.display = 'none';
-        document.getElementById('vehicleOptions').style.display = 'none';
-        document.getElementById('compactVehicleNotice').style.display = 'none';
-        document.getElementById('usedVehicleNotice').style.display = 'none';
-        document.getElementById('otherOptions').style.display = 'none';
+        const fields = [
+            document.getElementById('houseOptions'),
+            document.getElementById('landOptions'),
+            document.getElementById('buildingOptions'),
+            document.getElementById('vehicleOptions'),
+            document.getElementById('compactVehicleNotice'),
+            document.getElementById('usedVehicleNotice'),
+            document.getElementById('otherOptions'),
+        ];
+
+        fields.forEach(field => {
+            if (field) {
+                field.style.display = 'none';
+            }
+        });
     }
 
     // 확인 버튼 클릭 이벤트
     confirmSaleType.addEventListener('click', () => {
+        console.log('확인 버튼 클릭됨'); // 디버깅 로그 추가
         const saleAmount = parseInt(document.getElementById('realEstateValue').value.replace(/,/g, ''), 10);
         if (isNaN(saleAmount) || saleAmount <= 0) {
             alert('유효한 금액을 입력하세요.');
@@ -106,12 +116,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 닫기 버튼 클릭 이벤트
     closeSaleModal.addEventListener('click', () => {
+        console.log('모달 닫기 버튼 클릭됨'); // 디버깅 로그 추가
         saleModal.style.display = 'none';
     });
 
     // 모달 외부 클릭 시 닫기
     window.addEventListener('click', (e) => {
         if (e.target === saleModal) {
+            console.log('모달 외부 클릭됨'); // 디버깅 로그 추가
             saleModal.style.display = 'none';
         }
     });
@@ -121,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const resultDiv = document.getElementById('result');
         resultDiv.innerHTML = `<h3>${title}</h3>${details}`;
     }
-}); // DOMContentLoaded 닫는 중괄호
+});
     
     // 증여 모달 관련 코드
 const giftButton = document.getElementById('giftButton'); // 증여취득 버튼
