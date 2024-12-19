@@ -133,7 +133,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const resultDiv = document.getElementById('result');
         resultDiv.innerHTML = `<h3>${title}</h3>${details}`;
     }
-});
+}); // DOMContentLoaded 닫는 중괄호
+
     
     // 증여 모달 관련 코드
 const giftButton = document.getElementById('giftButton'); // 증여취득 버튼
