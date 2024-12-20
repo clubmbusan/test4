@@ -174,45 +174,41 @@ document.getElementById('closeOriginalModal').addEventListener('click', () => {
     originalModal.style.display = 'none';
 });
 
-// 계산 버튼 클릭 이벤트
 document.getElementById('calculateButton').addEventListener('click', () => {
     let assetValue = 0; // 자산 금액 초기화
     let taxRate = 0; // 취득세율 초기화
     const educationTaxRate = 0.1; // 지방교육세율 (10%)
     const ruralTaxRate = 0.2; // 농어촌특별세율 (20%)
 
-    // === 재산 유형과 모달에서 설정된 세율 불러오기 ===
     const assetTypeValue = document.getElementById('assetType').value;
 
-    // 부동산 유형: 금액 및 세율 불러오기
+    // === 재산 유형과 모달에서 설정된 세율 불러오기 ===
+    const selectedTaxRateElement = document.getElementById('selectedTaxRate');
+
+    // 숨겨진 필드 확인
+    if (!selectedTaxRateElement || selectedTaxRateElement.value === '') {
+        alert('모달에서 세율을 설정해주세요.');
+        return;
+    }
+
+    taxRate = parseFloat(selectedTaxRateElement.value);
+
+    // 부동산 유형: 금액 불러오기
     if (assetTypeValue === 'realEstate') {
         assetValue = parseInt(document.getElementById('realEstateValue').value.replace(/,/g, '') || '0', 10);
-
-        // 모달에서 설정된 세율 가져오기 (예: 증여 모달에서 설정)
-        taxRate = parseFloat(document.getElementById('selectedTaxRate').value || '0'); // 모달에서 설정된 세율
     }
-    // 차량 유형: 금액 및 세율 불러오기
+    // 차량 유형: 금액 불러오기
     else if (assetTypeValue === 'vehicle') {
         assetValue = parseInt(document.getElementById('vehiclePrice').value.replace(/,/g, '') || '0', 10);
-        const vehicleType = document.getElementById('vehicleType').value;
-
-        // 차량 종류에 따른 취득세율 설정
-        taxRate = vehicleType === 'compact' ? 0.05 :
-                  vehicleType === 'used' ? 0.02 : 0.07; // 경차: 5%, 중고차: 2%, 일반 차량: 7%
     }
-    // 기타 유형: 금액 및 세율 불러오기
+    // 기타 유형: 금액 불러오기
     else if (assetTypeValue === 'other') {
         assetValue = parseInt(document.getElementById('otherAssetValue').value.replace(/,/g, '') || '0', 10);
-        taxRate = 0.03; // 기타 자산의 취득세율: 3%
     }
 
     // === 입력값 유효성 검사 ===
     if (isNaN(assetValue) || assetValue <= 0) {
         alert('유효한 금액을 입력하세요.');
-        return;
-    }
-    if (taxRate === 0) {
-        alert('세율이 설정되지 않았습니다. 모달에서 세율을 선택해주세요.');
         return;
     }
 
@@ -231,4 +227,3 @@ document.getElementById('calculateButton').addEventListener('click', () => {
         <p><strong>총 세금: ${totalTax.toLocaleString()} 원</strong></p>
     `;
 });
-  
