@@ -82,7 +82,7 @@ window.addEventListener('click', (e) => {
         giftModal.style.display = 'none';
     }
 });
-
+});
 // === 상속 모달 관련 코드 ===
 const inheritanceButton = document.getElementById('inheritanceButton'); // 상속취득 버튼
 const inheritanceModal = document.getElementById('inheritanceModal');   // 상속취득 모달
