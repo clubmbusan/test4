@@ -192,29 +192,31 @@ document.getElementById('calculateButton').addEventListener('click', () => {
         return;
     }
 
-    // 계산하기 버튼 이벤트
-    taxRate = parseFloat(selectedTaxRateElement.value);
+    // 계산 버튼 클릭 이벤트
+document.getElementById('calculateButton').addEventListener('click', () => {
+    const educationTaxRate = 0.1; // 지방교육세율 (10%)
+    const ruralTaxRate = 0.2; // 농어촌특별세율 (20%)
 
-    // === 자산 금액 가져오기 ===
-    if (assetTypeValue === 'realEstate') {
-        assetValue = parseInt(document.getElementById('realEstateValue').value.replace(/,/g, '') || '0', 10);
-    } else if (assetTypeValue === 'vehicle') {
-        assetValue = parseInt(document.getElementById('vehiclePrice').value.replace(/,/g, '') || '0', 10);
-    } else if (assetTypeValue === 'other') {
-        assetValue = parseInt(document.getElementById('otherAssetValue').value.replace(/,/g, '') || '0', 10);
-    }
+    // === 모달에서 설정된 취득세 불러오기 ===
+    const acquisitionTaxElement = document.getElementById('calculatedAcquisitionTax');
 
-    // === 입력값 유효성 검사 ===
-    if (isNaN(assetValue) || assetValue <= 0) {
-        alert('유효한 금액을 입력하세요.');
+    // === 유효성 검사: 취득세 확인 ===
+    if (!acquisitionTaxElement || acquisitionTaxElement.value === '') {
+        alert('모달에서 취득세를 계산해주세요.');
         return;
     }
 
-    // === 세금 계산 ===
-    const acquisitionTax = Math.floor(assetValue * taxRate); // 취득세
+    const acquisitionTax = parseInt(acquisitionTaxElement.value || '0', 10);
+
+    if (isNaN(acquisitionTax) || acquisitionTax <= 0) {
+        alert('유효한 취득세 값이 없습니다.');
+        return;
+    }
+
+    // === 부가세 계산 ===
     const educationTax = Math.floor(acquisitionTax * educationTaxRate); // 지방교육세
     const ruralTax = Math.floor(acquisitionTax * ruralTaxRate); // 농어촌특별세
-    const totalTax = acquisitionTax + educationTax + ruralTax; // 최종 세금 합계
+    const totalTax = acquisitionTax + educationTax + ruralTax; // 총 세금 합계
 
     // === 결과 출력 ===
     document.getElementById('result').innerHTML = `
