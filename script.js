@@ -192,7 +192,7 @@ document.getElementById('calculateButton').addEventListener('click', () => {
         return;
     }
 
-    // 계산 버튼 클릭 이벤트
+   // 계산 버튼 클릭 이벤트
 document.getElementById('calculateButton').addEventListener('click', () => {
     const educationTaxRate = 0.1; // 지방교육세율 (10%)
     const ruralTaxRate = 0.2; // 농어촌특별세율 (20%)
@@ -227,3 +227,5 @@ document.getElementById('calculateButton').addEventListener('click', () => {
         <p><strong>총 세금: ${totalTax.toLocaleString()} 원</strong></p>
     `;
 });
+console.log('Script execution completed successfully.');
+ 
