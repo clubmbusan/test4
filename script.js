@@ -89,7 +89,7 @@ closeGiftModal.addEventListener('click', () => {
     });
 });
 
-// === [4] 상속 모달 관련 코드 ===
+// === 상속 모달 관련 코드 ===
 const inheritanceButton = document.getElementById('inheritanceButton'); // 상속취득 버튼
 const inheritanceModal = document.getElementById('inheritanceModal');   // 상속취득 모달
 const confirmInheritanceType = document.getElementById('confirmInheritanceType'); // 확인 버튼
