@@ -174,25 +174,7 @@ document.getElementById('closeOriginalModal').addEventListener('click', () => {
     originalModal.style.display = 'none';
 });
 
-document.getElementById('calculateButton').addEventListener('click', () => {
-    let assetValue = 0; // 자산 금액 초기화
-    let taxRate = 0; // 취득세율 초기화
-    const educationTaxRate = 0.1; // 지방교육세율 (10%)
-    const ruralTaxRate = 0.2; // 농어촌특별세율 (20%)
-
-    // === 재산 유형 가져오기 ===
-    const assetTypeValue = document.getElementById('assetType').value;
-
-    // === 모달에서 설정된 세율 불러오기 ===
-    const selectedTaxRateElement = document.getElementById('selectedTaxRate');
-
-    // === 유효성 검사: 세율 및 필드 확인 ===
-    if (!selectedTaxRateElement || selectedTaxRateElement.value === '') {
-        alert('모달에서 세율을 설정해주세요.');
-        return;
-    }
-
-   // 계산 버튼 클릭 이벤트
+// 계산 버튼 클릭 이벤트
 document.getElementById('calculateButton').addEventListener('click', () => {
     const educationTaxRate = 0.1; // 지방교육세율 (10%)
     const ruralTaxRate = 0.2; // 농어촌특별세율 (20%)
@@ -219,7 +201,8 @@ document.getElementById('calculateButton').addEventListener('click', () => {
     const totalTax = acquisitionTax + educationTax + ruralTax; // 총 세금 합계
 
     // === 결과 출력 ===
-    document.getElementById('result').innerHTML = `
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = `
         <h3>계산 결과</h3>
         <p>취득세: ${acquisitionTax.toLocaleString()} 원</p>
         <p>지방교육세: ${educationTax.toLocaleString()} 원</p>
@@ -227,5 +210,3 @@ document.getElementById('calculateButton').addEventListener('click', () => {
         <p><strong>총 세금: ${totalTax.toLocaleString()} 원</strong></p>
     `;
 });
-console.log('Script execution completed successfully.');
- 
