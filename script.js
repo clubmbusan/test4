@@ -27,66 +27,60 @@ realEstateValue.addEventListener('input', () => {
     realEstateValue.value = value ? parseInt(value, 10).toLocaleString() : '';
 });
 
-// 증여 모달 관련 코드
+// === 증여 모달 관련 코드 ===
 const giftButton = document.getElementById('giftButton'); // 증여취득 버튼
 const giftModal = document.getElementById('giftModal');   // 증여 모달
 const confirmGiftType = document.getElementById('confirmGiftType'); // 확인 버튼
 const closeGiftModal = document.getElementById('closeGiftModal');   // 닫기 버튼
- 
-    // 증여취득 버튼 클릭 시 모달 표시
-    giftButton.addEventListener('click', () => {
-        giftModal.style.display = 'flex';
-    });
 
-    // 증여 모달 확인 버튼 클릭 이벤트
-    confirmGiftType.addEventListener('click', () => {
-        const giftType = document.getElementById('giftType').value;
-        const assetValue = parseInt(document.getElementById('realEstateValue').value.replace(/,/g, '') || '0', 10);
+// 증여취득 버튼 클릭 시 모달 표시
+giftButton.addEventListener('click', () => {
+    giftModal.style.display = 'flex';
+});
 
-        if (isNaN(assetValue) || assetValue <= 0) {
-            alert('유효한 금액을 입력하세요.');
-            return;
-        }
+// 증여취득 모달 확인 버튼 클릭 이벤트
+confirmGiftType.addEventListener('click', () => {
+    const giftType = document.getElementById('giftType').value; // 증여 종류
+    const assetValue = parseInt(document.getElementById('realEstateValue').value.replace(/,/g, '') || '0', 10);
 
-        let taxRate = 0;
+    if (isNaN(assetValue) || assetValue <= 0) {
+        alert('유효한 금액을 입력하세요.');
+        return;
+    }
 
-        // 증여 종류에 따른 세율 설정
-        if (giftType === 'general') {
-            taxRate = 0.035; // 일반 증여 세율
-        } else if (giftType === 'corporate') {
-            taxRate = 0.04; // 법인 증여 세율
-        }
+    let taxRate = 0;
 
-        const acquisitionTax = Math.floor(assetValue * taxRate); // 취득세 계산
+    // 증여 종류에 따른 세율 설정
+    if (giftType === 'general') {
+        taxRate = 0.035; // 일반 증여 세율
+    } else if (giftType === 'corporate') {
+        taxRate = 0.04; // 법인 증여 세율
+    }
 
-        // 결과 출력
-        updateResult('증여 취득 계산 결과', `
-            <p>증여 종류: ${giftType}</p>
-            <p>증여 금액: ${assetValue.toLocaleString()} 원</p>
-            <p>취득세: ${acquisitionTax.toLocaleString()} 원</p>
-            <p>세율: ${(taxRate * 100).toFixed(1)}%</p>
-        `);
+    const acquisitionTax = Math.floor(assetValue * taxRate); // 취득세 계산
 
-        giftModal.style.display = 'none';
-    });
+    // 계산된 취득세를 숨겨진 필드에 저장
+    const acquisitionTaxField = document.getElementById('calculatedAcquisitionTax');
+    if (!acquisitionTaxField) {
+        console.error('숨겨진 필드 "calculatedAcquisitionTax"가 HTML에서 찾을 수 없습니다.');
+        return;
+    }
+    acquisitionTaxField.value = acquisitionTax;
 
-    // 닫기 버튼 클릭 이벤트
+    // 모달 닫기
+    giftModal.style.display = 'none';
+});
+
+// 닫기 버튼 클릭 이벤트
 closeGiftModal.addEventListener('click', () => {
     giftModal.style.display = 'none';
 });
-    
-    // === [4] 공통 함수: 결과 업데이트 ===
-    function updateResult(title, details) {
-        const resultDiv = document.getElementById('result');
-        resultDiv.innerHTML = `<h3>${title}</h3>${details}`;
-    }
 
-    // === [5] 모달 외부 클릭 공통 처리 ===
-    window.addEventListener('click', (e) => {
-        if (e.target.classList.contains('modal')) {
-            e.target.style.display = 'none';
-        }
-    });
+// 모달 외부 클릭 시 닫기
+window.addEventListener('click', (e) => {
+    if (e.target === giftModal) {
+        giftModal.style.display = 'none';
+    }
 });
 
 // === 상속 모달 관련 코드 ===
