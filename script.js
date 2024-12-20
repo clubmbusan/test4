@@ -122,15 +122,15 @@ confirmInheritanceType.addEventListener('click', () => {
 
     const acquisitionTax = Math.floor(assetValue * taxRate); // 취득세 계산
 
-    // 결과 출력
-    updateResult('상속 취득 계산 결과', `
-        <p>상속 종류: ${inheritanceType}</p>
-        <p>조정 대상 지역: ${isAdjustedArea ? '예' : '아니오'}</p>
-        <p>상속 금액: ${assetValue.toLocaleString()} 원</p>
-        <p>취득세: ${acquisitionTax.toLocaleString()} 원</p>
-        <p>세율: ${(taxRate * 100).toFixed(1)}%</p>
-    `);
+    // 계산된 취득세를 숨겨진 필드에 저장
+    const acquisitionTaxField = document.getElementById('calculatedAcquisitionTax');
+    if (!acquisitionTaxField) {
+        console.error('숨겨진 필드 "calculatedAcquisitionTax"가 HTML에서 찾을 수 없습니다.');
+        return;
+    }
+    acquisitionTaxField.value = acquisitionTax;
 
+    // 모달 닫기
     inheritanceModal.style.display = 'none';
 });
 
