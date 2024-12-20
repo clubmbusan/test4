@@ -180,29 +180,27 @@ document.getElementById('calculateButton').addEventListener('click', () => {
     const educationTaxRate = 0.1; // 지방교육세율 (10%)
     const ruralTaxRate = 0.2; // 농어촌특별세율 (20%)
 
+    // === 재산 유형 가져오기 ===
     const assetTypeValue = document.getElementById('assetType').value;
 
-    // === 재산 유형과 모달에서 설정된 세율 불러오기 ===
+    // === 모달에서 설정된 세율 불러오기 ===
     const selectedTaxRateElement = document.getElementById('selectedTaxRate');
 
-    // 숨겨진 필드 확인
+    // === 유효성 검사: 세율 및 필드 확인 ===
     if (!selectedTaxRateElement || selectedTaxRateElement.value === '') {
         alert('모달에서 세율을 설정해주세요.');
         return;
     }
 
+    // 계산하기 버튼 이벤트
     taxRate = parseFloat(selectedTaxRateElement.value);
 
-    // 부동산 유형: 금액 불러오기
+    // === 자산 금액 가져오기 ===
     if (assetTypeValue === 'realEstate') {
         assetValue = parseInt(document.getElementById('realEstateValue').value.replace(/,/g, '') || '0', 10);
-    }
-    // 차량 유형: 금액 불러오기
-    else if (assetTypeValue === 'vehicle') {
+    } else if (assetTypeValue === 'vehicle') {
         assetValue = parseInt(document.getElementById('vehiclePrice').value.replace(/,/g, '') || '0', 10);
-    }
-    // 기타 유형: 금액 불러오기
-    else if (assetTypeValue === 'other') {
+    } else if (assetTypeValue === 'other') {
         assetValue = parseInt(document.getElementById('otherAssetValue').value.replace(/,/g, '') || '0', 10);
     }
 
@@ -216,7 +214,7 @@ document.getElementById('calculateButton').addEventListener('click', () => {
     const acquisitionTax = Math.floor(assetValue * taxRate); // 취득세
     const educationTax = Math.floor(acquisitionTax * educationTaxRate); // 지방교육세
     const ruralTax = Math.floor(acquisitionTax * ruralTaxRate); // 농어촌특별세
-    const totalTax = acquisitionTax + educationTax + ruralTax; // 총 세금
+    const totalTax = acquisitionTax + educationTax + ruralTax; // 최종 세금 합계
 
     // === 결과 출력 ===
     document.getElementById('result').innerHTML = `
