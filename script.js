@@ -174,15 +174,39 @@ document.getElementById('closeOriginalModal').addEventListener('click', () => {
     originalModal.style.display = 'none';
 });
 
-// 계산 버튼 클릭 이벤트
+// === 모달의 "확인" 버튼: 취득세 계산 및 저장 ===
+document.getElementById('confirmGiftType').addEventListener('click', () => {
+    const giftType = document.getElementById('giftType').value; // 증여 종류 선택
+    const assetValue = parseInt(document.getElementById('realEstateValue').value.replace(/,/g, '') || '0', 10); // 부동산 금액 입력
+
+    let taxRate = 0;
+
+    // 증여 종류에 따른 세율 설정
+    if (giftType === 'general') {
+        taxRate = 0.035; // 일반 증여 세율
+    } else if (giftType === 'corporate') {
+        taxRate = 0.04; // 법인 증여 세율
+    }
+
+    // 취득세 계산
+    const acquisitionTax = Math.floor(assetValue * taxRate);
+
+    // 계산된 취득세를 숨겨진 필드에 저장
+    document.getElementById('calculatedAcquisitionTax').value = acquisitionTax;
+
+    // 모달 닫기
+    document.getElementById('giftModal').style.display = 'none';
+});
+
+// === 계산하기 버튼: 최종 계산 ===
 document.getElementById('calculateButton').addEventListener('click', () => {
     const educationTaxRate = 0.1; // 지방교육세율 (10%)
     const ruralTaxRate = 0.2; // 농어촌특별세율 (20%)
 
-    // === 모달에서 설정된 취득세 불러오기 ===
+    // 숨겨진 필드에서 취득세 불러오기
     const acquisitionTaxElement = document.getElementById('calculatedAcquisitionTax');
 
-    // === 유효성 검사: 취득세 확인 ===
+    // 유효성 검사: 취득세 확인
     if (!acquisitionTaxElement || acquisitionTaxElement.value === '') {
         alert('모달에서 취득세를 계산해주세요.');
         return;
@@ -195,14 +219,13 @@ document.getElementById('calculateButton').addEventListener('click', () => {
         return;
     }
 
-    // === 부가세 계산 ===
+    // 부가세 계산
     const educationTax = Math.floor(acquisitionTax * educationTaxRate); // 지방교육세
     const ruralTax = Math.floor(acquisitionTax * ruralTaxRate); // 농어촌특별세
     const totalTax = acquisitionTax + educationTax + ruralTax; // 총 세금 합계
 
-    // === 결과 출력 ===
-    const resultDiv = document.getElementById('result');
-    resultDiv.innerHTML = `
+    // 결과 출력
+    document.getElementById('result').innerHTML = `
         <h3>계산 결과</h3>
         <p>취득세: ${acquisitionTax.toLocaleString()} 원</p>
         <p>지방교육세: ${educationTax.toLocaleString()} 원</p>
