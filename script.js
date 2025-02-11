@@ -1,30 +1,35 @@
 // === DOMContentLoaded 이벤트: 페이지가 로드된 후 실행되는 주요 로직 ===
 document.addEventListener('DOMContentLoaded', () => {
-    // === [1] 재산 유형 필드 처리 ===
-    const assetType = document.getElementById('assetType');
-    const fields = {
-        realEstate: document.getElementById('realEstateField'),
-        vehicle: document.getElementById('vehicleField'),
-        other: document.getElementById('otherField'),
-    };
+    const realEstateType = document.getElementById('realEstateType');
+    const houseField = document.getElementById('houseField');
+    const landField = document.getElementById('landField');
+    const buildingField = document.getElementById('buildingField');
 
-    // 재산 유형 변경 이벤트: 선택된 유형에 따라 필드를 동적으로 표시
-    assetType.addEventListener('change', () => {
-        Object.values(fields).forEach(field => field.style.display = 'none');
-        const selectedField = fields[assetType.value];
-        if (selectedField) selectedField.style.display = 'block';
+    // === [1] 부동산 종류 선택에 따른 추가 입력 필드 표시 ===
+    realEstateType.addEventListener('change', (e) => {
+        houseField.classList.add('hidden');
+        landField.classList.add('hidden');
+        buildingField.classList.add('hidden');
+
+        switch (e.target.value) {
+            case 'house':
+                houseField.classList.remove('hidden');
+                break;
+            case 'land':
+                landField.classList.remove('hidden');
+                break;
+            case 'building':
+                buildingField.classList.remove('hidden');
+                break;
+        }
     });
 
-    // 초기값 설정: 기본으로 "부동산" 필드 표시
-    assetType.dispatchEvent(new Event('change'));
-
-    // === 금액 입력 필드에 콤마 자동 적용 ===
-const realEstateValue = document.getElementById('realEstateValue');
-
-realEstateValue.addEventListener('input', () => {
-    // 입력된 값을 숫자로 변환 후 콤마 추가
-    const value = realEstateValue.value.replace(/,/g, '').replace(/[^0-9]/g, '');
-    realEstateValue.value = value ? parseInt(value, 10).toLocaleString() : '';
+    // === [2] 금액 입력 필드에 콤마 자동 적용 ===
+    const realEstateValue = document.getElementById('realEstateValue');
+    realEstateValue.addEventListener('input', () => {
+        const value = realEstateValue.value.replace(/,/g, '').replace(/[^0-9]/g, '');
+        realEstateValue.value = value ? parseInt(value, 10).toLocaleString() : '';
+    });
 });
 
 // === 증여 모달 관련 코드 ===
