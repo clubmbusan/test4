@@ -93,8 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target === saleModal) {
       saleModal.style.display = 'none';
     }
-  });
-
+  
 // === 증여 모달 관련 코드 ===
 const giftButton = document.getElementById('giftButton'); // 증여취득 버튼
 const giftModal = document.getElementById('giftModal');   // 증여 모달
