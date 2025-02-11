@@ -1,12 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // 재산 유형에 따라 필드 표시하기
   const assetType = document.getElementById('assetType');
   const realEstateField = document.getElementById('realEstateField');
   const vehicleField = document.getElementById('vehicleField');
   const otherField = document.getElementById('otherField');
-  
+
+  // [1] 재산 유형 변경 시, 해당 필드만 보이도록
   assetType.addEventListener('change', () => {
     const selected = assetType.value;
+
     if (selected === 'realEstate') {
       realEstateField.style.display = 'block';
       vehicleField.style.display = 'none';
@@ -15,46 +16,64 @@ document.addEventListener('DOMContentLoaded', () => {
       realEstateField.style.display = 'none';
       vehicleField.style.display = 'block';
       otherField.style.display = 'none';
-    } else if (selected === 'other') {
+    } else {
+      // 'other'
       realEstateField.style.display = 'none';
       vehicleField.style.display = 'none';
       otherField.style.display = 'block';
     }
   });
+  // 초기 상태 반영
   assetType.dispatchEvent(new Event('change'));
-  
-  // 부동산 종류에 따른 하위 필드 표시하기
+
+  // [2] 부동산 종류에 따른 하위 필드 표시/숨김
   const realEstateType = document.getElementById('realEstateType');
   const houseField = document.getElementById('houseField');
   const landField = document.getElementById('landField');
   const buildingField = document.getElementById('buildingField');
-  
-  const hideAllSubFields = () => {
+
+  function hideAllSubFields() {
     houseField.style.display = 'none';
     landField.style.display = 'none';
     buildingField.style.display = 'none';
-  };
-  
+  }
+
   realEstateType.addEventListener('change', () => {
     hideAllSubFields();
-    const selected = realEstateType.value;
-    if (selected === 'house') {
+    const selectedType = realEstateType.value;
+
+    if (selectedType === 'house') {
       houseField.style.display = 'block';
-    } else if (selected === 'land') {
+    } else if (selectedType === 'land') {
       landField.style.display = 'block';
-    } else if (selected === 'building') {
+    } else if (selectedType === 'building') {
       buildingField.style.display = 'block';
     }
   });
+  // 초기 상태 반영
   realEstateType.dispatchEvent(new Event('change'));
-  
-  // 금액 입력 필드: 콤마 자동 추가 (부동산 금액 예시)
+
+  // [3] 부동산 금액 입력 시 콤마 자동
   const realEstateValue = document.getElementById('realEstateValue');
   realEstateValue.addEventListener('input', () => {
-    const value = realEstateValue.value.replace(/,/g, '').replace(/[^0-9]/g, '');
-    realEstateValue.value = value ? parseInt(value, 10).toLocaleString() : '';
+    const raw = realEstateValue.value.replace(/,/g, '').replace(/[^0-9]/g, '');
+    realEstateValue.value = raw ? parseInt(raw, 10).toLocaleString() : '';
   });
-  
+
+  // [4] 차량 금액도 콤마 자동 적용하고 싶다면
+  const vehiclePrice = document.getElementById('vehiclePrice');
+  vehiclePrice.addEventListener('input', () => {
+    const raw = vehiclePrice.value.replace(/,/g, '').replace(/[^0-9]/g, '');
+    vehiclePrice.value = raw ? parseInt(raw, 10).toLocaleString() : '';
+  });
+
+  // [5] 기타 자산 금액도 동일하게 적용
+  const otherAssetValue = document.getElementById('otherAssetValue');
+  otherAssetValue.addEventListener('input', () => {
+    const raw = otherAssetValue.value.replace(/,/g, '').replace(/[^0-9]/g, '');
+    otherAssetValue.value = raw ? parseInt(raw, 10).toLocaleString() : '';
+  });
+
   // -------------------------
   // 매매모달 관련 이벤트 처리
   // -------------------------
