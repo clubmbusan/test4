@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
         }
     });
-});
 
     // === [2] 금액 입력 필드에 콤마 자동 적용 ===
     const realEstateValue = document.getElementById('realEstateValue');
