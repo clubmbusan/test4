@@ -1,91 +1,105 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>취득세 계산기 (2024년 기준)</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>취득세 계산기 (2024년 기준)</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="calculator">
-        <h1>취득세 계산기 (2024년 기준)</h1>
-        <form id="acquisitionForm">
-            <!-- 재산 유형 선택 -->
-            <label for="assetType">재산 유형:</label>
-            <select id="assetType">
-                <option value="realEstate" selected>부동산</option>
-                <option value="vehicle">차량</option>
-                <option value="other">기타</option>
-            </select>
-
-            <!-- 부동산 추가 옵션 -->
-           <div id="realEstateField">
-    <label for="realEstateType">부동산 종류:</label>
-    <select id="realEstateType">
-        <option value="house">주택</option>
-        <option value="land">토지</option>
-        <option value="building">건축물</option>
-    </select>
-</div>
-
-<!-- 주택 추가 입력 -->
-<div id="houseField" class="hidden">
-    <label for="houseType">주택 종류:</label>
-    <select id="houseType">
-        <option value="general">일반 주택</option>
-        <option value="highValue">고가 주택 (9억 초과)</option>
-    </select>
-</div>
-
-<!-- 토지 추가 입력 -->
-<div id="landField" class="hidden">
-    <label for="landType">토지 용도:</label>
-    <select id="landType">
-        <option value="farmland">농지</option>
-        <option value="residentialLand">대지 (건축 가능)</option>
-        <option value="forest">임야 (산지)</option>
-        <option value="other">기타 토지</option>
-    </select>
-</div>
-
-<!-- 건축물 추가 입력 -->
-<div id="buildingField" class="hidden">
-    <label for="buildingType">건축물 용도:</label>
-    <select id="buildingType">
-        <option value="residentialOffice">주거용 오피스텔</option>
-        <option value="commercialBuilding">비주거용 건축물 (상가, 사무실 등)</option>
-    </select>
-</div>
-   
-                   
-                <!-- 금액 입력 필드 -->
-                <label for="realEstateValue">부동산 금액 (원):</label>
-                <input type="text" id="realEstateValue" placeholder="예: 100,000,000">
-            </div>
-
-            <!-- 차량 추가 옵션 -->
-            <div id="vehicleField" style="display: none;">
-                <label for="vehicleTypeInput">차량 종류:</label>
-                <select id="vehicleTypeInput">
-                  <option value="standard">일반 차량</option>
-                  <option value="compact">경차</option>
-                  <option value="used">중고차</option>
-              </select>
-             <label for="vehiclePrice">차량 금액 (원):</label>
-             <input type="text" id="vehiclePrice" placeholder="예: 30,000,000">
-            </div>
-
-            <!-- 기타 자산 입력 -->
-            <div id="otherField" style="display: none;">
-                <label for="otherAssetValue">기타 자산 금액 (원):</label>
-                <input type="text" id="otherAssetValue" placeholder="예: 50,000,000">
-            </div>
-
-            <!-- 버튼 4개 -->
-            <button type="button" class="action-btn" id="giftButton">증여취득</button>
-            <button type="button" class="action-btn" id="inheritanceButton">상속취득</button>
-            <button type="button" class="action-btn" id="originalButton">원시취득</button>
-          
+  <div class="calculator">
+    <h1>취득세 계산기 (2024년 기준)</h1>
+    <form id="acquisitionForm">
+      
+      <!-- 재산 유형 선택 -->
+      <label for="assetType">재산 유형:</label>
+      <select id="assetType">
+        <option value="realEstate" selected>부동산</option>
+        <option value="vehicle">차량</option>
+        <option value="other">기타</option>
+      </select>
+      
+      <!-- 부동산 관련 입력 필드 -->
+      <div id="realEstateField">
+        <label for="realEstateType">부동산 종류:</label>
+        <select id="realEstateType">
+          <option value="house">주택</option>
+          <option value="land">토지</option>
+          <option value="building">건축물</option>
+        </select>
+      </div>
+      
+      <!-- 주택 선택 시 추가 필드 -->
+      <div id="houseField" class="hidden">
+        <label for="houseType">주택 종류:</label>
+        <select id="houseType">
+          <option value="general">일반 주택</option>
+          <option value="highValue">고가 주택 (9억 초과)</option>
+        </select>
+      </div>
+      
+      <!-- 토지 선택 시 추가 필드 -->
+      <div id="landField" class="hidden">
+        <label for="landType">토지 용도:</label>
+        <select id="landType">
+          <option value="farmland">농지</option>
+          <option value="residentialLand">대지 (건축 가능)</option>
+          <option value="forest">임야 (산지)</option>
+          <option value="other">기타 토지</option>
+        </select>
+      </div>
+      
+      <!-- 건축물 선택 시 추가 필드 -->
+      <div id="buildingField" class="hidden">
+        <label for="buildingType">건축물 용도:</label>
+        <select id="buildingType">
+          <option value="residentialOffice">주거용 오피스텔</option>
+          <option value="commercialBuilding">비주거용 건축물 (상가, 사무실 등)</option>
+        </select>
+      </div>
+      
+      <!-- 차량 관련 입력 필드 -->
+      <div id="vehicleField" style="display: none;">
+        <label for="vehicleTypeInput">차량 종류:</label>
+        <select id="vehicleTypeInput">
+          <option value="standard">일반 차량</option>
+          <option value="compact">경차</option>
+          <option value="used">중고차</option>
+        </select>
+        <label for="vehiclePrice">차량 금액 (원):</label>
+        <input type="text" id="vehiclePrice" placeholder="예: 30,000,000">
+      </div>
+      
+      <!-- 기타 자산 입력 필드 -->
+      <div id="otherField" style="display: none;">
+        <label for="otherAssetValue">기타 자산 금액 (원):</label>
+        <input type="text" id="otherAssetValue" placeholder="예: 50,000,000">
+      </div>
+      
+      <!-- 공통 금액 입력 (부동산 금액) -->
+      <label for="realEstateValue">부동산 금액 (원):</label>
+      <input type="text" id="realEstateValue" placeholder="예: 100,000,000">
+      
+      <!-- 취득 유형 버튼 -->
+      <button type="button" class="action-btn" id="giftButton">증여취득</button>
+      <button type="button" class="action-btn" id="inheritanceButton">상속취득</button>
+      <button type="button" class="action-btn" id="originalButton">원시취득</button>
+      <button type="button" class="action-btn" id="saleButton">매매취득</button>
+      
+      <!-- 매매취득 모달 -->
+      <div id="saleModal" class="modal" style="display: none;">
+        <div class="modal-content">
+          <h3>매매 취득 세부사항</h3>
+          <label for="saleType">매매 종류:</label>
+          <select id="saleType">
+            <option value="general">일반 매매</option>
+            <option value="special">특수 매매</option>
+          </select>
+          <button type="button" class="confirm-btn" id="confirmSaleType">확인</button>
+          <button type="button" class="close-btn" id="closeSaleModal">닫기</button>
+        </div>
+      </div>
+                  
             <!-- 증여취득 모달 -->
             <div id="giftModal" class="modal" style="display: none;">
                 <div class="modal-content">
