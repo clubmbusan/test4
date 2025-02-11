@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const landField = document.getElementById('landField');
     const buildingField = document.getElementById('buildingField');
 
-    // === [1] 부동산 종류 선택에 따른 추가 입력 필드 표시 ===
+    // 부동산 종류 선택 시 해당 필드만 표시
     realEstateType.addEventListener('change', (e) => {
         houseField.classList.add('hidden');
         landField.classList.add('hidden');
@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
         }
     });
+});
 
     // === [2] 금액 입력 필드에 콤마 자동 적용 ===
     const realEstateValue = document.getElementById('realEstateValue');
