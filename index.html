@@ -27,6 +27,50 @@
                     <option value="building">건축물</option>
                 </select>
 
+             <!-- 부동산 추가 옵션 -->
+             <div id="realEstateField" style="display: block;">
+                <label for="realEstateType">부동산 종류:</label>
+                <select id="realEstateType">
+                  <option value="house">주택</option>
+                  <option value="land">토지</option>
+                  <option value="building">건축물</option>
+                </select>
+
+    <!-- 주택 추가 입력 -->
+    <div id="houseField" class="hidden">
+        <label for="houseType">주택 종류:</label>
+        <select id="houseType">
+            <option value="general">일반 주택</option>
+            <option value="highValue">고가 주택 (9억 초과)</option>
+        </select>
+    </div>
+
+    <!-- 토지 추가 입력 -->
+    <div id="landField" class="hidden">
+        <label for="landType">토지 용도:</label>
+        <select id="landType">
+            <option value="farmland">농지</option>
+            <option value="residentialLand">대지 (건축 가능)</option>
+            <option value="forest">임야 (산지)</option>
+            <option value="other">기타 토지</option>
+        </select>
+    </div>
+
+    <!-- 건축물 추가 입력 -->
+    <div id="buildingField" class="hidden">
+        <label for="buildingType">건축물 용도:</label>
+        <select id="buildingType">
+            <option value="residentialOffice">주거용 오피스텔</option>
+            <option value="commercialBuilding">비주거용 건축물 (상가, 사무실 등)</option>
+        </select>
+    </div>
+
+    <!-- 금액 입력 필드 (공통) -->
+    <label for="realEstateValue">부동산 금액 (원):</label>
+    <input type="text" id="realEstateValue" placeholder="예: 100,000,000">
+</div>
+
+                
                 <!-- 금액 입력 필드 -->
                 <label for="realEstateValue">부동산 금액 (원):</label>
                 <input type="text" id="realEstateValue" placeholder="예: 100,000,000">
