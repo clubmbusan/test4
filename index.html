@@ -96,7 +96,25 @@
   </select>
 </div>
 
-
+ <!-- 과밀억제권역 여부 드롭다운 (영리법인 선택 시 나타남) -->
+  <div id="crowdedAreaField" class="hidden">
+    <label for="crowdedArea">과밀억제권역 여부 (서울, 인천, 경기도 14개 시):</label>
+    <select id="crowdedArea">
+      <option value="yes">예</option>
+      <option value="no">아니오</option>
+    </select>
+  </div>
+  
+  <!-- 대도시 여부 드롭다운 (과밀억제권역이 아니면 나타남) -->
+  <div id="metropolitanAreaField" class="hidden">
+    <label for="metropolitanArea">대도시 여부:</label>
+    <select id="metropolitanArea">
+      <option value="yes">예</option>
+      <option value="no">아니오</option>
+    </select>
+  </div>
+</div>
+       
         <!-- 부동산 금액 -->
         <label for="realEstateValue">부동산 금액 (원):</label>
         <input type="text" id="realEstateValue" placeholder="예: 100,000,000">
