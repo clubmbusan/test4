@@ -61,24 +61,41 @@
   </select>
 </div>
 
-       <!-- 토지 선택 시 노출 -->
-        <div id="landField" class="hidden">
-          <label for="landType">토지 용도:</label>
-          <select id="landType">
-            <option value="farmland">농지(논,밭,과,목)</option>
-            <option value="nonFarmland">농지 이외 토지</option>
-          </select>
-        </div>
+      <!-- 토지 선택 시 노출 -->
+<div id="landField" class="hidden">
+  <label for="landType">토지 용도:</label>
+  <select id="landType">
+    <option value="farmland">농지 (Rice paddies, fields 등)</option>
+    <option value="nonFarmland">농지 외 토지</option>
+  </select>
+  
+  <!-- 취득 유형 드롭다운 추가 -->
+  <label for="landAcquisitionType">취득 유형:</label>
+  <select id="landAcquisitionType">
+    <option value="natural">자연인</option>
+    <option value="forProfit">영리법인</option>
+    <option value="nonProfit">비영리법인</option>
+  </select>
+</div>
 
-        <!-- 건축물 선택 시 노출 -->
-        <div id="buildingField" class="hidden">
-          <label for="buildingType">건축물 용도:</label>
-          <select id="buildingType">
-            <option value="commercialBuilding">비주거용 건축물 (상가, 사무실, 공장 등)</option>
-            <option value="luxuryProperty">사치성 재산 (별장, 오락장 등)</option>
-            <option value="residentialOffice">주거용 오피스텔</option>           
-          </select>
-        </div>
+<!-- 건축물 선택 시 노출 -->
+<div id="buildingField" class="hidden">
+  <label for="buildingType">건축물 용도:</label>
+  <select id="buildingType">
+    <option value="commercialBuilding">비주거용 건축물 (상가, 사무실, 공장 등)</option>
+    <option value="luxuryProperty">사치성 재산 (별장, 오락장 등)</option>
+    <option value="residentialOffice">주거용 오피스텔</option>
+  </select>
+  
+  <!-- 취득 유형 드롭다운 추가 -->
+  <label for="buildingAcquisitionType">취득 유형:</label>
+  <select id="buildingAcquisitionType">
+    <option value="natural">자연인</option>
+    <option value="forProfit">영리법인</option>
+    <option value="nonProfit">비영리법인</option>
+  </select>
+</div>
+
 
         <!-- 부동산 금액 -->
         <label for="realEstateValue">부동산 금액 (원):</label>
