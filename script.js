@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // [1] 재산 유형 변경 시, 해당 필드만 보이도록
   assetType.addEventListener('change', () => {
     const selected = assetType.value;
-
     if (selected === 'realEstate') {
       realEstateField.style.display = 'block';
       vehicleField.style.display = 'none';
@@ -57,13 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // [3] 건축물 영역에서 추가 드롭다운 처리
   // - 건축물 영역 내 취득 유형 드롭다운에서 영리법인 선택 시 과밀억제권역 여부 드롭다운 표시
   // - 과밀억제권역 여부 드롭다운에서 "아니오" 선택 시 대도시 여부 드롭다운 표시
-
   const buildingAcquisitionType = document.getElementById('buildingAcquisitionType');
   const crowdedAreaField = document.getElementById('crowdedAreaField');
   const crowdedArea = document.getElementById('crowdedArea');
   const metropolitanAreaField = document.getElementById('metropolitanAreaField');
 
-  // 취득 유형 드롭다운에서 영리법인 선택 시, 과밀억제권역 여부 드롭다운 표시
   buildingAcquisitionType.addEventListener('change', () => {
     if (buildingAcquisitionType.value === 'forProfit') {
       crowdedAreaField.style.display = 'block';
@@ -85,29 +82,28 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   // 초기 상태 반영
   crowdedArea.dispatchEvent(new Event('change'));
-});
 
-
-  // [3] 부동산 금액 입력 시 콤마 자동
+  // [4] 부동산 금액 입력 시 콤마 자동
   const realEstateValue = document.getElementById('realEstateValue');
   realEstateValue.addEventListener('input', () => {
     const raw = realEstateValue.value.replace(/,/g, '').replace(/[^0-9]/g, '');
     realEstateValue.value = raw ? parseInt(raw, 10).toLocaleString() : '';
   });
 
-  // [4] 차량 금액도 콤마 자동 적용하고 싶다면
+  // [5] 차량 금액도 콤마 자동 적용
   const vehiclePrice = document.getElementById('vehiclePrice');
   vehiclePrice.addEventListener('input', () => {
     const raw = vehiclePrice.value.replace(/,/g, '').replace(/[^0-9]/g, '');
     vehiclePrice.value = raw ? parseInt(raw, 10).toLocaleString() : '';
   });
 
-  // [5] 기타 자산 금액도 동일하게 적용
+  // [6] 기타 자산 금액도 동일하게 적용
   const otherAssetValue = document.getElementById('otherAssetValue');
   otherAssetValue.addEventListener('input', () => {
     const raw = otherAssetValue.value.replace(/,/g, '').replace(/[^0-9]/g, '');
     otherAssetValue.value = raw ? parseInt(raw, 10).toLocaleString() : '';
   });
+});
 
   // -------------------------
   // 매매모달 관련 이벤트 처리
