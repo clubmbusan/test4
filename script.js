@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-   // 재산 유형에 따른 필드 표시
+  // 재산 유형에 따른 필드 표시
   const assetType = document.getElementById('assetType');
   const realEstateField = document.getElementById('realEstateField');
   const vehicleField = document.getElementById('vehicleField');
@@ -29,9 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // [2] 부동산 종류에 따른 하위 필드 표시/숨김
   const realEstateType = document.getElementById('realEstateType');
-  const houseField = document.getElementById('houseField');      // 주택 관련 영역
-  const landField = document.getElementById('landField');       // 토지 관련 영역 (위의 수정된 코드 포함)  
-  const buildingField = document.getElementById('buildingField');    // 건축물 관련 영역 (위의 수정된 코드 포함)
+  const houseField = document.getElementById('houseField');       // 주택 관련 영역
+  const landField = document.getElementById('landField');         // 토지 관련 영역
+  const buildingField = document.getElementById('buildingField');   // 건축물 관련 영역
 
   function hideAllSubFields() {
     houseField.style.display = 'none';
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     hideAllSubFields();
     const selectedType = realEstateType.value;
     if (selectedType === 'house') {
-    // 주택이 선택되면 조정지역 여부, 주택 종류, 취득 유형 드롭다운이 동시에 표시됨
+      // 주택이 선택되면 조정지역 여부, 주택 종류, 취득 유형 드롭다운이 동시에 표시됨
       houseField.style.display = 'block';
     } else if (selectedType === 'land') {
       landField.style.display = 'block';
@@ -51,9 +51,42 @@ document.addEventListener('DOMContentLoaded', () => {
       buildingField.style.display = 'block';
     }
   });
-   
   // 초기 상태 반영
   realEstateType.dispatchEvent(new Event('change'));
+
+  // [3] 건축물 영역에서 추가 드롭다운 처리
+  // - 건축물 영역 내 취득 유형 드롭다운에서 영리법인 선택 시 과밀억제권역 여부 드롭다운 표시
+  // - 과밀억제권역 여부 드롭다운에서 "아니오" 선택 시 대도시 여부 드롭다운 표시
+
+  const buildingAcquisitionType = document.getElementById('buildingAcquisitionType');
+  const crowdedAreaField = document.getElementById('crowdedAreaField');
+  const crowdedArea = document.getElementById('crowdedArea');
+  const metropolitanAreaField = document.getElementById('metropolitanAreaField');
+
+  // 취득 유형 드롭다운에서 영리법인 선택 시, 과밀억제권역 여부 드롭다운 표시
+  buildingAcquisitionType.addEventListener('change', () => {
+    if (buildingAcquisitionType.value === 'forProfit') {
+      crowdedAreaField.style.display = 'block';
+    } else {
+      crowdedAreaField.style.display = 'none';
+      metropolitanAreaField.style.display = 'none';
+    }
+  });
+  // 초기 상태 반영
+  buildingAcquisitionType.dispatchEvent(new Event('change'));
+
+  // 과밀억제권역 드롭다운 변경 이벤트: "아니오" 선택 시 대도시 여부 드롭다운 표시
+  crowdedArea.addEventListener('change', () => {
+    if (crowdedArea.value === 'no') {
+      metropolitanAreaField.style.display = 'block';
+    } else {
+      metropolitanAreaField.style.display = 'none';
+    }
+  });
+  // 초기 상태 반영
+  crowdedArea.dispatchEvent(new Event('change'));
+});
+
 
   // [3] 부동산 금액 입력 시 콤마 자동
   const realEstateValue = document.getElementById('realEstateValue');
