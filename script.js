@@ -41,8 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
   realEstateType.addEventListener('change', () => {
     hideAllSubFields();
     const selectedType = realEstateType.value;
-
     if (selectedType === 'house') {
+    // 주택이 선택되면 조정지역 여부, 주택 종류, 취득 유형 드롭다운이 동시에 표시됨
       houseField.style.display = 'block';
     } else if (selectedType === 'land') {
       landField.style.display = 'block';
@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
       buildingField.style.display = 'block';
     }
   });
+   
   // 초기 상태 반영
   realEstateType.dispatchEvent(new Event('change'));
 
