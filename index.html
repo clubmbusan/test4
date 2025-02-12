@@ -240,13 +240,45 @@
     <button type="button" id="closeOriginalModal" style="background-color: gray; margin-top: 10px;">닫기</button>
   </div>
 </div>
-    
-      <!-- 숨겨진 필드: 모달에서 계산된 취득세 저장 -->
-      <input type="hidden" id="calculatedAcquisitionTax" value="0">
 
-      <!-- 신고하기 버튼 (신규 추가) -->
-     <button type="button" id="submitReportButton" style="margin-top: 15px;">신고하기</button>   
-      
+<!-- ============================= -->
+<!-- 변경: "신고하기"는 모달 대신 인라인 펼치기 -->
+<!-- ============================= -->
+<!-- 신고하기 토글 버튼 -->
+<button type="button" class="action-btn" id="reportToggleButton" style="background-color: red; color: white;">
+  신고하기
+</button>
+
+<!-- 신고 정보 입력 영역 (초기에는 숨김) -->
+<div id="reportSection" style="display: none; margin-top: 10px; border: 1px solid #ddd; padding: 10px;">
+  <h3>신고 정보 입력</h3>
+
+  <label for="reportDate">신고일:</label>
+  <input type="date" id="reportDate" />
+  <p>신고일은 취득세 신고 접수일을 기준으로 입력하세요.</p>
+
+  <label for="reportDeadline">신고 기한:</label>
+  <select id="reportDeadline">
+    <option value="60days"> 매매(원시)취득 (60일)</option>
+    <option value="3months">증여 취득(3개월)</option>
+    <option value="6months">상속 취득 (6개월)</option>
+    <option value="9months">국외 상속 취득 (9개월)</option>
+  </select>
+
+  <!-- 연장 신고일 입력 영역 (필요시) -->
+  <div id="extendedDeadlineContainer" style="margin-top: 10px;">
+    <label for="extendedReportDate">연장 신고일:</label>
+    <input type="date" id="extendedReportDate" />
+    <p>신고 기한 연장은 특별한 사유가 있을 때만 가능합니다.</p>
+  </div>
+
+  <!-- 신고 제출 버튼 -->
+  <button type="button" id="submitReportButton" style="margin-top: 15px;"> 확인 </button>
+</div>
+
+      <!-- 숨겨진 필드: 모달에서 계산된 취득세 저장 -->
+      <input type="hidden" id="calculatedAcquisitionTax" value="0">   
+     
       <!-- 계산하기 버튼 -->
       <button type="button" id="calculateButton" style="margin-top: 15px;">계산하기</button>
     </form>
