@@ -142,65 +142,105 @@
       <button type="button" class="action-btn" id="originalButton">원시취득</button>
       
       <!-- 매매취득 모달 -->
-      <div id="saleModal" class="modal" style="display: none;">
-        <div class="modal-content">
-          <h3>매매 취득 세부사항</h3>
-          <label for="saleType">매매 종류:</label>
-          <select id="saleType">
-            <option value="general">일반 매매</option>
-            <option value="special">특수 매매</option>
-          </select>
-          <button type="button" class="confirm-btn" id="confirmSaleType">확인</button>
-          <button type="button" class="close-btn" id="closeSaleModal">닫기</button>
-        </div>
-      </div>
-      
-      <!-- 증여취득 모달 -->
-      <div id="giftModal" class="modal" style="display: none;">
-        <div class="modal-content">
-          <h3>증여 취득 종류 선택</h3>
-          <label for="giftType">증여 종류:</label>
-          <select id="giftType">
-            <option value="general">일반 증여</option>
-            <option value="corporate">법인 증여</option>
-          </select>
-          <button type="button" class="confirm-btn" id="confirmGiftType">확인</button>
-          <button type="button" class="close-btn" id="closeGiftModal">닫기</button>
-        </div>
-      </div>
-      
-      <!-- 상속취득 모달 -->
-      <div id="inheritanceModal" class="modal" style="display: none;">
-        <div class="modal-content">
-          <h3>상속 취득 세부사항</h3>
-          <label for="inheritanceType">상속 종류:</label>
-          <select id="inheritanceType">
-            <option value="general">일반 상속</option>
-            <option value="corporate">법인 상속</option>
-          </select>
-          <label for="isAdjustedAreaInheritance">조정 대상 지역 여부:</label>
-          <select id="isAdjustedAreaInheritance">
-            <option value="yes">예</option>
-            <option value="no">아니오</option>
-          </select>
-          <button type="button" class="confirm-btn" id="confirmInheritanceType">확인</button>
-          <button type="button" class="close-btn" id="closeInheritanceModal">닫기</button>
-        </div>
-      </div>
-      
-      <!-- 원시취득 모달 -->
-      <div id="originalModal" class="modal" style="display: none;">
-        <div class="modal-content">
-          <h3>원시 취득 세부사항</h3>
-          <label for="originalCategory">건축물 종류:</label>
-          <select id="originalCategory">
-            <!-- 원시취득 대상 건축물만 표시 -->
-          </select>
-          <button type="button" id="confirmOriginalType">확인</button>
-          <button type="button" id="closeOriginalModal" style="background-color: gray; margin-top: 10px;">닫기</button>
-        </div>
-      </div>
-      
+<div id="saleModal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <h3>매매 취득 세부사항</h3>
+    
+    <label for="saleType">매매 종류:</label>
+    <select id="saleType">
+      <option value="general">일반 매매</option>
+      <option value="special">특수 매매</option>
+    </select>
+    
+    <!-- 매매 취득일 입력 필드 추가 -->
+    <div id="acquisitionDateContainer" style="margin-top: 20px;">
+      <label for="acquisitionDate">매매 취득일:</label>
+      <input type="date" id="acquisitionDate" placeholder="연도-월-일">
+      <p>매매 취득일은 계약 체결일을 기준으로 입력하세요.</p>
+    </div>
+    
+    <button type="button" class="confirm-btn" id="confirmSaleType">확인</button>
+    <button type="button" class="close-btn" id="closeSaleModal">닫기</button>
+  </div>
+</div>
+
+    <!-- 증여취득 모달 -->
+<div id="giftModal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <h3>증여 취득 세부사항</h3>
+
+    <label for="giftType">증여 종류:</label>
+    <select id="giftType">
+      <option value="general">일반 증여</option>
+      <option value="corporate">법인 증여</option>
+    </select>
+
+    <!-- 증여취득일 입력 필드 추가 -->
+    <div id="giftAcquisitionDateContainer" style="margin-top: 20px;">
+      <label for="giftAcquisitionDate">증여 취득일:</label>
+      <input type="date" id="giftAcquisitionDate" placeholder="연도-월-일">
+      <p>증여 취득일은 증여 계약 체결일을 기준으로 입력하세요.</p>
+    </div>
+
+    <button type="button" class="confirm-btn" id="confirmGiftType">확인</button>
+    <button type="button" class="close-btn" id="closeGiftModal">닫기</button>
+  </div>
+</div>  
+   
+     <!-- 상속취득 모달 -->
+<div id="inheritanceModal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <h3>상속 취득 세부사항</h3>
+
+    <label for="inheritanceType">상속 종류:</label>
+    <select id="inheritanceType">
+      <option value="general">일반 상속</option>
+      <option value="corporate">법인 상속</option>
+    </select>
+
+    <label for="isAdjustedAreaInheritance">조정 대상 지역 여부:</label>
+    <select id="isAdjustedAreaInheritance">
+      <option value="yes">예</option>
+      <option value="no">아니오</option>
+    </select>
+
+    <!-- 상속취득일 입력 필드 추가 -->
+    <div id="inheritanceDateContainer" style="margin-top: 20px;">
+      <label for="inheritanceAcquisitionDate">상속 취득일:</label>
+      <input type="date" id="inheritanceAcquisitionDate" placeholder="연도-월-일">
+      <p>상속 취득일은 상속 개시일(피상속인의 사망일)을 기준으로 입력하세요.</p>
+    </div>
+
+    <button type="button" class="confirm-btn" id="confirmInheritanceType">확인</button>
+    <button type="button" class="close-btn" id="closeInheritanceModal">닫기</button>
+  </div>
+</div>
+   
+       <!-- 원시취득 모달 -->
+<div id="originalModal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <h3>원시 취득 세부사항</h3>
+    
+    <label for="originalCategory">건축물 종류:</label>
+    <select id="originalCategory">
+      <option value="residential">주거용 건축물</option>
+      <option value="commercial">상업용 건축물</option>
+      <option value="industrial">산업용 건축물</option>
+      <option value="other">기타</option>
+    </select>
+
+    <!-- 원시취득일 입력 필드 추가 -->
+    <div id="originalDateContainer" style="margin-top: 20px;">
+      <label for="originalAcquisitionDate">원시 취득일:</label>
+      <input type="date" id="originalAcquisitionDate" placeholder="연도-월-일">
+      <p>원시 취득일은 건축물의 <strong>사용승인일 또는 준공검사일</strong>을 기준으로 입력하세요.</p>
+    </div>
+
+    <button type="button" id="confirmOriginalType">확인</button>
+    <button type="button" id="closeOriginalModal" style="background-color: gray; margin-top: 10px;">닫기</button>
+  </div>
+</div>
+    
       <!-- 숨겨진 필드: 모달에서 계산된 취득세 저장 -->
       <input type="hidden" id="calculatedAcquisitionTax" value="0">
       
