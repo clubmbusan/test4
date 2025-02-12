@@ -105,6 +105,16 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+ // ===== 신고하기 버튼 토글 이벤트 추가 =====
+  document.getElementById('reportToggleButton').addEventListener('click', () => {
+    const reportSection = document.getElementById('reportSection');
+    if (reportSection.style.display === 'none' || reportSection.style.display === '') {
+      reportSection.style.display = 'block';
+    } else {
+      reportSection.style.display = 'none';
+    }
+});
+
   // -------------------------
   // 매매모달 관련 이벤트 처리
   // -------------------------
@@ -319,38 +329,74 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // === 계산하기 버튼: 최종 계산 ===
     document.getElementById('calculateButton').addEventListener('click', () => {
-        const educationTaxRate = 0.1; // 지방교육세율 (10%)
-        const ruralTaxRate = 0.2; // 농어촌특별세율 (20%)
-
-        // 숨겨진 필드에서 취득세 불러오기
-        const acquisitionTaxElement = document.getElementById('calculatedAcquisitionTax');
-
-        // 유효성 검사: 취득세 확인
-        if (!acquisitionTaxElement || acquisitionTaxElement.value === '') {
-            alert('모달에서 취득세를 계산해주세요.');
-            return;
+    // ---------------------------
+    // 숨겨진 필드에서 취득세 불러오기 및 검증
+    // ---------------------------
+    const acquisitionTaxElement = document.getElementById('calculatedAcquisitionTax');
+    
+    // 유효성 검사: 취득세 확인
+    if (!acquisitionTaxElement || acquisitionTaxElement.value === '') {
+        alert('모달에서 취득세를 계산해주세요.');
+        return;
+    }
+    
+    const acquisitionTax = parseInt(acquisitionTaxElement.value || '0', 10);
+    if (isNaN(acquisitionTax) || acquisitionTax <= 0) {
+        alert('유효한 취득세 값이 없습니다.');
+        return;
+    }
+    
+    // ---------------------------
+    // 부가세 계산 (예: 지방교육세, 농어촌특별세)
+    // ---------------------------
+    const educationTaxRate = 0.1; // 지방교육세율 (10%)
+    const ruralTaxRate = 0.2;     // 농어촌특별세율 (20%)
+    const educationTax = Math.floor(acquisitionTax * educationTaxRate);
+    const ruralTax = Math.floor(acquisitionTax * ruralTaxRate);
+    const baseTotalTax = acquisitionTax + educationTax + ruralTax;
+    
+    // ---------------------------
+    // 신고일 및 신고 기한에 따른 가산세 계산 (예시)
+    // ---------------------------
+    const reportDeadlineSelect = document.getElementById('reportDeadline');
+    let allowedDays = 60; // 기본: 매매(60일)
+    if (reportDeadlineSelect.value === '3months') {
+        allowedDays = 90; // 증여: 3개월
+    } else if (reportDeadlineSelect.value === '6months') {
+        allowedDays = 180; // 상속: 6개월
+    } else if (reportDeadlineSelect.value === '9months') {
+        allowedDays = 270; // 상속: 9개월
+    }
+    
+    // 여기서는 예시로 취득일을 고정합니다.
+    const baseAcquisitionDate = new Date('2024-01-01');
+    const allowedDeadline = new Date(baseAcquisitionDate.getTime() + allowedDays * 24 * 60 * 60 * 1000);
+    
+    const reportDateInput = document.getElementById('reportDate').value;
+    let penaltyTax = 0;
+    if (reportDateInput) {
+        const reportDate = new Date(reportDateInput);
+        if (reportDate > allowedDeadline) {
+            const lateTime = reportDate.getTime() - allowedDeadline.getTime();
+            const lateDays = Math.ceil(lateTime / (24 * 60 * 60 * 1000));
+            penaltyTax = Math.floor(acquisitionTax * 0.001 * lateDays); // 예시: 연체 일수당 0.1% 가산
         }
-
-        const acquisitionTax = parseInt(acquisitionTaxElement.value || '0', 10);
-
-        if (isNaN(acquisitionTax) || acquisitionTax <= 0) {
-            alert('유효한 취득세 값이 없습니다.');
-            return;
-        }
-
-        // 부가세 계산
-        const educationTax = Math.floor(acquisitionTax * educationTaxRate); // 지방교육세
-        const ruralTax = Math.floor(acquisitionTax * ruralTaxRate); // 농어촌특별세
-        const totalTax = acquisitionTax + educationTax + ruralTax; // 총 세금 합계
-
-        // 결과 출력
-        const resultDiv = document.getElementById('result');
-        resultDiv.innerHTML = `
-            <h3>계산 결과</h3>
-            <p>취득세: ${acquisitionTax.toLocaleString()} 원</p>
-            <p>지방교육세: ${educationTax.toLocaleString()} 원</p>
-            <p>농어촌특별세: ${ruralTax.toLocaleString()} 원</p>
-            <p><strong>총 세금: ${totalTax.toLocaleString()} 원</strong></p>
-        `;
-    });
+    }
+    
+    const totalTax = baseTotalTax + penaltyTax;
+    
+    // ---------------------------
+    // 결과 출력
+    // ---------------------------
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = `
+      <h3>계산 결과</h3>
+      <p>취득세: ${acquisitionTax.toLocaleString()} 원</p>
+      <p>지방교육세: ${educationTax.toLocaleString()} 원</p>
+      <p>농어촌특별세: ${ruralTax.toLocaleString()} 원</p>
+      <p>가산세 (연체): ${penaltyTax.toLocaleString()} 원</p>
+      <p><strong>총 세금: ${totalTax.toLocaleString()} 원</strong></p>
+    `;
+  });
 });
+
