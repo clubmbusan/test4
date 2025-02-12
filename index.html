@@ -32,18 +32,35 @@
           <option value="land">토지</option>
           <option value="building">건축(시설)물</option>
         </select>
-        
+           
         <!-- 주택 선택 시 노출 -->
-        <div id="houseField" class="hidden">
-          <label for="houseType">주택 종류:</label>
-          <select id="houseType">
-            <option value="general6">일반 주택 (6억 이하)</option>
-            <option value="general9">일반 주택 (6억 초과 ~ 9억 이하)</option>          
-            <option value="highValue">고가 주택 (9억 초과)</option>
-          </select>
-        </div>
+<div id="houseField" class="hidden">
+  <!-- 조정지역 여부 드롭다운 -->
+  <label for="adjustedArea">조정지역 여부:</label>
+  <select id="adjustedArea">
+    <option value="yes">조정지역</option>
+    <option value="no">비조정지역</option>
+  </select>
 
-        <!-- 토지 선택 시 노출 -->
+  <!-- 주택 종류 드롭다운 -->
+  <label for="houseType">주택 종류:</label>
+  <select id="houseType">
+    <option value="general6">일반 주택 (6억 이하)</option>
+    <option value="general9">일반 주택 (6억 초과 ~ 9억 이하)</option>
+    <option value="highValue">고가 주택 (9억 초과)</option>
+  </select>
+
+  <!-- 취득 유형 드롭다운 (2주택, 3주택, 4주택, 법인) -->
+  <label for="acquisitionType">취득 유형:</label>
+  <select id="acquisitionType">
+    <option value="twoHouse">2주택</option>
+    <option value="threeHouse">3주택</option>
+    <option value="fourHouse">4주택</option>
+    <option value="corporate">법인</option>
+  </select>
+</div>
+
+       <!-- 토지 선택 시 노출 -->
         <div id="landField" class="hidden">
           <label for="landType">토지 용도:</label>
           <select id="landType">
