@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+   // 재산 유형에 따른 필드 표시
   const assetType = document.getElementById('assetType');
   const realEstateField = document.getElementById('realEstateField');
   const vehicleField = document.getElementById('vehicleField');
@@ -28,9 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // [2] 부동산 종류에 따른 하위 필드 표시/숨김
   const realEstateType = document.getElementById('realEstateType');
-  const houseField = document.getElementById('houseField');
-  const landField = document.getElementById('landField');
-  const buildingField = document.getElementById('buildingField');
+  const houseField = document.getElementById('houseField');      // 주택 관련 영역
+  const landField = document.getElementById('landField');       // 토지 관련 영역 (위의 수정된 코드 포함)  
+  const buildingField = document.getElementById('buildingField');    // 건축물 관련 영역 (위의 수정된 코드 포함)
 
   function hideAllSubFields() {
     houseField.style.display = 'none';
