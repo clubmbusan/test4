@@ -139,44 +139,127 @@ confirmSaleType.addEventListener('click', () => {
   let appliedTaxRate = "";
   const selectedType = document.getElementById('realEstateType').value; // 'house', 'land', 'building'
   
+  // =====================
+  // 1. 주택 계산
+  // =====================
   if (selectedType === 'house') {
-    // 주택 계산 - houseType을 통해 세율 구분 ("general6", "general9", "highValue")
+    // 주택의 취득 유형 (oneHouse, twoHouse, threeHouse, fourHouse, nonProfitCorporate, forProfitCorporate)
+    const acquisitionType = document.getElementById('acquisitionType').value;
+    // 주택 종류 (general6, general9, highValue)
     const houseType = document.getElementById('houseType').value;
-    if (houseType === 'highValue') {
-      // 고가 주택 (9억 초과): 무조건 3%
-      acquisitionTax = Math.floor(assetValue * 0.03);
-      appliedTaxRate = "3%";
-    } else if (houseType === 'general6') {
-      // 일반 주택 (6억원 이하): 1%
-      acquisitionTax = Math.floor(assetValue * 0.01);
-      appliedTaxRate = "1%";
-    } else if (houseType === 'general9') {
-      // 일반 주택 (6억 초과 ~ 9억원 이하)
-      if (assetValue <= 600000000) {
-        acquisitionTax = Math.floor(assetValue * 0.01);
-        appliedTaxRate = "1%";
-      } else if (assetValue > 600000000 && assetValue <= 900000000) {
-        acquisitionTax = Math.floor(600000000 * 0.01 + (assetValue - 600000000) * 0.07);
-        appliedTaxRate = "1% (6억원까지) + 7% (초과분)";
-      } else {
+    
+    // 1-1. 1주택자 (일시적 2주택 포함)
+    if (acquisitionType === 'oneHouse') {
+     if (houseType === 'premium') {
+      // 고급 주택: 12% 중과세
+      acquisitionTax = Math.floor(assetValue * 0.12);
+      appliedTaxRate = "12%";
+      } else if (houseType === 'highValue') { 
+        // 고가 주택 (9억 초과): 무조건 3%
         acquisitionTax = Math.floor(assetValue * 0.03);
         appliedTaxRate = "3%";
-      }
-    } else {
-      // houseType 값이 없거나 예외인 경우 기본적으로 1%, 7%, 3% 조건 적용
-      if (assetValue <= 600000000) {
+      } else if (houseType === 'general6') {
+        // 일반 주택 (6억원 이하): 1%
         acquisitionTax = Math.floor(assetValue * 0.01);
         appliedTaxRate = "1%";
-      } else if (assetValue > 600000000 && assetValue <= 900000000) {
-        acquisitionTax = Math.floor(600000000 * 0.01 + (assetValue - 600000000) * 0.07);
-        appliedTaxRate = "1% (6억원까지) + 7% (초과분)";
+      } else if (houseType === 'general9') {
+        // 일반 주택 (6억 초과 ~ 9억원 이하): 전체 금액에 대해 단일 세율 적용
+        if (assetValue <= 600000000) {
+          acquisitionTax = Math.floor(assetValue * 0.01);
+          appliedTaxRate = "1%";
+        } else if (assetValue <= 900000000) {
+          // 선형 보간: 6억일 때 1%, 9억일 때 3%
+          const effectiveRate = 0.01 + ((assetValue - 600000000) / 300000000) * (0.03 - 0.01);
+          acquisitionTax = Math.floor(assetValue * effectiveRate);
+          appliedTaxRate = `${(effectiveRate * 100).toFixed(2)}%`;
+        } else {
+          acquisitionTax = Math.floor(assetValue * 0.03);
+          appliedTaxRate = "3%";
+        }
       } else {
-        acquisitionTax = Math.floor(assetValue * 0.03);
-        appliedTaxRate = "3%";
+        // houseType 값이 없거나 예외인 경우, 기본적으로 1%~3% 방식 적용
+        if (assetValue <= 600000000) {
+          acquisitionTax = Math.floor(assetValue * 0.01);
+          appliedTaxRate = "1%";
+        } else if (assetValue <= 900000000) {
+          const effectiveRate = 0.01 + ((assetValue - 600000000) / 300000000) * (0.03 - 0.01);
+          acquisitionTax = Math.floor(assetValue * effectiveRate);
+          appliedTaxRate = `${(effectiveRate * 100).toFixed(2)}%`;
+        } else {
+          acquisitionTax = Math.floor(assetValue * 0.03);
+          appliedTaxRate = "3%";
+        }
       }
     }
+    // 1-2. 2주택자
+    else if (acquisitionType === 'twoHouse') {
+      const adjustedArea = document.getElementById('adjustedArea').value; // 'yes' 또는 'no'
+      if (adjustedArea === 'yes') {
+        // 조정지역: 8%
+        acquisitionTax = Math.floor(assetValue * 0.08);
+        appliedTaxRate = "8%";
+      } else {
+        // 일반지역: 기존 주택 계산 방식 적용
+        if (houseType === 'highValue') {
+          acquisitionTax = Math.floor(assetValue * 0.03);
+          appliedTaxRate = "3%";
+        } else if (houseType === 'general6') {
+          acquisitionTax = Math.floor(assetValue * 0.01);
+          appliedTaxRate = "1%";
+        } else if (houseType === 'general9') {
+          if (assetValue <= 600000000) {
+            acquisitionTax = Math.floor(assetValue * 0.01);
+            appliedTaxRate = "1%";
+          } else if (assetValue <= 900000000) {
+            const effectiveRate = 0.01 + ((assetValue - 600000000) / 300000000) * (0.03 - 0.01);
+            acquisitionTax = Math.floor(assetValue * effectiveRate);
+            appliedTaxRate = `${(effectiveRate * 100).toFixed(2)}%`;
+          } else {
+            acquisitionTax = Math.floor(assetValue * 0.03);
+            appliedTaxRate = "3%";
+          }
+        } else {
+          if (assetValue <= 600000000) {
+            acquisitionTax = Math.floor(assetValue * 0.01);
+            appliedTaxRate = "1%";
+          } else if (assetValue <= 900000000) {
+            const effectiveRate = 0.01 + ((assetValue - 600000000) / 300000000) * (0.03 - 0.01);
+            acquisitionTax = Math.floor(assetValue * effectiveRate);
+            appliedTaxRate = `${(effectiveRate * 100).toFixed(2)}%`;
+          } else {
+            acquisitionTax = Math.floor(assetValue * 0.03);
+            appliedTaxRate = "3%";
+          }
+        }
+      }
+    }
+    // 1-3. 3주택자
+    else if (acquisitionType === 'threeHouse') {
+      const adjustedArea = document.getElementById('adjustedArea').value;
+      if (adjustedArea === 'yes') {
+        acquisitionTax = Math.floor(assetValue * 0.12);
+        appliedTaxRate = "12%";
+      } else {
+        acquisitionTax = Math.floor(assetValue * 0.08);
+        appliedTaxRate = "8%";
+      }
+    }
+    // 1-4. 4주택자
+    else if (acquisitionType === 'fourHouse') {
+      acquisitionTax = Math.floor(assetValue * 0.12);
+      appliedTaxRate = "12%";
+    }
+    // 1-5. 법인 (영리, 비영리 모두)
+    else if (acquisitionType === 'nonProfitCorporate' || acquisitionType === 'forProfitCorporate') {
+      acquisitionTax = Math.floor(assetValue * 0.12);
+      appliedTaxRate = "12%";
+    }
     window.selectedAcquisitionMethod = "매매취득세";
-  } else if (selectedType === 'land') {
+  }
+  // =====================
+  // 2. 토지 계산
+  // =====================
+  else if (selectedType === 'land') {
     // 토지 계산: 토지 용도에 따라 (농지: 3%, 농지 외 토지: 4%)
     const landType = document.getElementById('landType').value;
     if (landType === 'farmland') {
@@ -191,14 +274,20 @@ confirmSaleType.addEventListener('click', () => {
       appliedTaxRate = "4%";
     }
     window.selectedAcquisitionMethod = "매매취득세";
-  } else if (selectedType === 'building') {
+  }
+  // =====================
+  // 3. 건축물 계산
+  // =====================
+  else if (selectedType === 'building') {
     // 건축물: 기본 4%
     acquisitionTax = Math.floor(assetValue * 0.04);
     appliedTaxRate = "4%";
     window.selectedAcquisitionMethod = "매매취득세";
   }
   
+  // ---------------------------
   // 계산된 취득세와 적용 세율 정보를 저장
+  // ---------------------------
   const acquisitionTaxField = document.getElementById('calculatedAcquisitionTax');
   if (acquisitionTaxField) {
     acquisitionTaxField.value = acquisitionTax;
