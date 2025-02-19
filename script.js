@@ -211,8 +211,10 @@ document.addEventListener('DOMContentLoaded', () => {
     reportSection.style.display = (reportSection.style.display === 'none' || reportSection.style.display === '') ? 'block' : 'none';
   });
 
-  /* 신고 제출 버튼 이벤트 처리 (신고 입력값 저장 및 신고 영역 숨김) */
-  document.getElementById('submitReportButton').addEventListener('click', () => {
+// ====================================================
+//  /* 신고 제출 버튼 이벤트 처리 (신고 입력값 저장 및 신고 영역 숨김) */
+// ====================================================
+   document.getElementById('submitReportButton').addEventListener('click', () => {
     const reportDate = document.getElementById('reportDate').value;
     const reportDeadline = document.getElementById('reportDeadline').value;
     const extendedReportDate = document.getElementById('extendedReportDate').value; // 선택 사항
@@ -237,7 +239,9 @@ document.addEventListener('DOMContentLoaded', () => {
     return rate * 3;
   }
 
-  /* 8. 유상취득 모달 관련 이벤트 처리 (업데이트된 매매 표준세율 및 세율 정보 저장) */
+// -------------------------
+// 유상취득 모달 관련 이벤트 처리 (업데이트된 매매 표준세율 및 세율 정보 저장)
+// -------------------------
   const saleButton = document.getElementById('saleButton');
   const saleModal = document.getElementById('saleModal');
   const confirmSaleType = document.getElementById('confirmSaleType');
@@ -455,7 +459,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  /* 8. 증여 취득 모달 관련 코드 (업데이트된 증여 표준세율 및 세율 정보 저장) */
+// -------------------------
+// /* 증여 취득 모달 관련 코드 (업데이트된 증여 표준세율 및 세율 정보 저장) */
+// -------------------------
   const giftButton = document.getElementById('giftButton'); // 증여취득 버튼
   const giftModal = document.getElementById('giftModal');   // 증여 모달
   const confirmGiftType = document.getElementById('confirmGiftType'); // 확인 버튼
@@ -528,7 +534,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  /* 9. 상속 취득 모달 관련 코드 (업데이트된 상속 표준세 적용 및 세율 정보 저장) */
+// -------------------------
+// /* 상속 취득 모달 관련 코드 (업데이트된 상속 표준세 적용 및 세율 정보 저장) */
+// -------------------------
   const inheritanceButton = document.getElementById('inheritanceButton'); // 상속취득 버튼
   const inheritanceModal = document.getElementById('inheritanceModal');   // 상속취득 모달
   const confirmInheritanceType = document.getElementById('confirmInheritanceType'); // 확인 버튼
@@ -583,18 +591,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // 모달 닫기
     inheritanceModal.style.display = 'none';
   });
-
+  
+  // 닫기 버튼 클릭 이벤트
   closeInheritanceModal.addEventListener('click', () => {
     inheritanceModal.style.display = 'none';
   });
 
+  // 모달 외부 클릭 시 닫기
   window.addEventListener('click', (e) => {
     if (e.target === inheritanceModal) {
       inheritanceModal.style.display = 'none';
     }
   });
 
-  /* 10. 원시 취득 모달 관련 코드 (업데이트된 중과세율 로직) */
+// -------------------------
+// /* 원시 취득 모달 관련 코드 (업데이트된 중과세율 로직) */
+// -------------------------
   const originalButton = document.getElementById('originalButton');   // 원시취득 버튼
   const originalModal = document.getElementById('originalModal');     // 원시취득 모달
   const confirmOriginalType = document.getElementById('confirmOriginalType'); // 확인 버튼
@@ -687,8 +699,10 @@ document.addEventListener('DOMContentLoaded', () => {
     return d;
   }
         
-  /* 12. 계산하기 버튼: 최종 계산 (업데이트된 결과지 출력) */
-  document.getElementById('calculateButton').addEventListener('click', () => {
+// -------------------------
+///* 계산하기 버튼: 최종 계산 (업데이트된 결과지 출력) */
+// -------------------------
+ document.getElementById('calculateButton').addEventListener('click', () => {
     // 취득유형에 따라 올바른 취득일 입력 필드에서 값을 읽어옵니다.
     const acquisitionMethod = window.selectedAcquisitionMethod || "";
     let acquisitionDateInput = "";
