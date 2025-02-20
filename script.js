@@ -12,19 +12,35 @@ document.addEventListener('DOMContentLoaded', () => {
       realEstateField.style.display = 'block';
       vehicleField.style.display = 'none';
       otherField.style.display = 'none';
-    } else if (selected === 'vehicle') {
+      // [수정1] 부동산 선택 시 차량 관련 하위 필드 숨김
+      const vehicleAcquisitionTypeField = document.getElementById('vehicleAcquisitionTypeField');
+      const vehicleCongestedField = document.getElementById('vehicleCongestedField');
+      if (vehicleAcquisitionTypeField) {
+        vehicleAcquisitionTypeField.style.display = 'none';
+      }
+      if (vehicleCongestedField) {
+        vehicleCongestedField.style.display = 'none';
+      }
+    }
+    // [수정2] assetType이 "vehicle" 또는 "machineryEquipment"일 때만 차량/기계장비 관련 필드 표시
+    else if (selected === 'vehicle' || selected === 'machineryEquipment') {
       realEstateField.style.display = 'none';
       vehicleField.style.display = 'block';
       otherField.style.display = 'none';
 
-      // 추가: 차량 관련 하위 필드 표시
+      // 차량/기계장비 관련 하위 필드 표시
       const vehicleAcquisitionTypeField = document.getElementById('vehicleAcquisitionTypeField');
       const vehicleCongestedField = document.getElementById('vehicleCongestedField');
       if (vehicleAcquisitionTypeField) {
         vehicleAcquisitionTypeField.style.display = 'block';
       }
-      // 취득인 유형 드롭다운 변경 시, 법인 선택이면 과밀억제권역 필드 표시
+      // 초기 설정: 취득인 유형에 따라 과밀억제권역 드롭다운 표시 여부 결정
       const vehicleAcquisitionType = document.getElementById('vehicleAcquisitionType');
+      if (vehicleAcquisitionType.value === 'forProfit' || vehicleAcquisitionType.value === 'nonProfit') {
+        vehicleCongestedField.style.display = 'block';
+      } else {
+        vehicleCongestedField.style.display = 'none';
+      }
       vehicleAcquisitionType.addEventListener('change', () => {
         if (vehicleAcquisitionType.value === 'forProfit' || vehicleAcquisitionType.value === 'nonProfit') {
           vehicleCongestedField.style.display = 'block';
@@ -68,7 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   // 초기 상태 반영
   realEstateType.dispatchEvent(new Event('change'));
-});
 
   /* =========================
      [A] 토지 부분 (이전 수정 내용)
